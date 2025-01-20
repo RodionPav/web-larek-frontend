@@ -330,7 +330,7 @@ interface IOrderData {
 Поля класса:
 
 - protected successButton: HTMLButtonElement;
-- protected \_total: HTMLElement;
+- protected _total: HTMLElement;
 
 Методы:
 

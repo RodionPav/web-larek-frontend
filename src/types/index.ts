@@ -5,6 +5,8 @@ export interface IProduct {
 	title: string;
 	category: string;
 	price: number;
+	index?: number;
+	disable?: boolean;
 }
 
 export interface IProductsData {
@@ -32,6 +34,8 @@ export interface IOrderData {
 	validateOrder(field: keyof IOrder): boolean;
 	clearOrder(): void;
 }
+
+export type TotalOrderInfo = { total: number }; // !!!
 
 export type TOrderPayInfo = Pick<IOrder, 'payment' | 'address'>;
 
