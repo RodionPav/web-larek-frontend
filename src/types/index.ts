@@ -8,42 +8,35 @@ export interface IProduct {
 }
 
 export interface IProductsData {
-	items: IProduct[];
-	preview: string | null;
 	setProducts(items: IProduct[]): void;
 	getProducts(): IProduct[];
 	getProduct(id: string): IProduct;
 }
 
-export interface ICartData {
-	products: IProduct[];
-	total: TCartTotal;
-	getTotalPrice(): TCartTotal;
-	getCartList(): IProduct[];
-	addProduct: (product: IProduct) => void;
-	deleteProduct: (id: string) => void;
-	clearCart: () => void;
-}
-
-export interface IUser {
+export interface IOrder {
 	payment: string;
 	address: string;
 	email: string;
 	phone: string;
-	total: number;
-	items: [];
 }
 
-export interface IUserData {
-	setOrderInfo(UserData: IUser): void;
-	setContactsInfo(UserData: IUser): void;
-	checkOrderValidation(data: Record<keyof TUserOrderInfo, string>): boolean;
-	checkContactsValidation(data: Record<keyof TUserContactsInfo, string>): boolean; 
-	clearUser(): void;
+export interface IOrderData {
+	addProduct(product: IProduct): void;
+	deleteProduct(id: string): void;
+	getItems(): IProduct[];
+	getLength(): number;
+	getTotalPrice(): number;
+	getOrderByKey(key: keyof IOrder): string;
+	getOrderInfo(): IOrder;
+	setOrderField(field: keyof IOrder, value: string): void;
+	validateOrder(field: keyof IOrder): boolean;
+	clearOrder(): void;
 }
 
-export type TCartTotal = Pick<IUser, 'total'>;
+export type TOrderPayInfo = Pick<IOrder, 'payment' | 'address'>;
 
-export type TUserOrderInfo = Pick<IUser, 'payment' | 'address'>;
+export type TUserContactsInfo = Pick<IOrder, 'email' | 'phone'>; 
 
-export type TUserContactsInfo = Pick<IUser, 'email' | 'phone'>;
+export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
+
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
