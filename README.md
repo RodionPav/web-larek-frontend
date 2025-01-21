@@ -187,7 +187,7 @@ interface IOrderData {
 
 Поля класса:
 
-- protected _content: HTMLElement - контент модального окна
+- protected \_content: HTMLElement - контент модального окна
 
   Методы:
 
@@ -200,52 +200,57 @@ interface IOrderData {
 
 Поля класса:
 
-- protected _counter: HTMLElement;
-- protected _catalog: HTMLElement;
-- protected _wrapper: HTMLElement;
-- protected _basket: HTMLElement;
+- protected \_counter: HTMLElement;
+- protected \_catalog: HTMLElement;
+- protected \_wrapper: HTMLElement;
+- protected \_basket: HTMLElement;
 
 Методы:
 
 - сеттеры и геттеры для полей класса
 
-#### Класс СardСatalog
+#### Класс abstract Card
 
-Отвечает за отображение карточки на главном экране, задавая в карточке данные: названия, изображения, цены. В классе устанавливаются слушатели на все интерактивные элементы, в результате взаимодействия с которыми покупателя генерируются соответствующие события.\
-Поля класса содержат элементы разметки элементов карточки. Конструктор, кроме темплейта принимает экземпляр `EventEmitter` для инициации событий.\
+Родительский класс для СardСatalog, CardPreview, CardBasket.
+Отвечает за основные поля карточки товара, задавая в карточке данные: названия,цены, id. Конструктор, кроме темплейта принимает экземпляр `EventEmitter` для инициации событий.
 
 Поля класса:
 
 - protected events: IEvents;
-- protected cardImage: HTMLImageElement;
 - protected cardTitle: HTMLElement;
-- protected cardCategory: HTMLElement;
 - protected cardPrice: HTMLElement;
 - protected cardId: string;
 
-Методы:
+Методы: - сеттеры и геттеры для полей класса
 
-- сеттеры и геттеры для полей класса
+#### Класс СardСatalog extends Card
 
-#### Класс CardPreview
-
-Отвечает карточку в модальном окне просмотра 1 карточки, задавая в карточке данные: названия, изображения, цены, описания. В классе устанавливаются слушатели на все интерактивные элементы, в результате взаимодействия с которыми покупателя генерируются соответствующие события.\
+Отвечает за отображение карточки на главном экране, задавая в карточке данные: изображения и категории. В классе устанавливаются слушатели на все интерактивные элементы, в результате взаимодействия с которыми покупателя генерируются соответствующие события.\
 Поля класса содержат элементы разметки элементов карточки. Конструктор, кроме темплейта принимает экземпляр `EventEmitter` для инициации событий.\
 
 Поля класса:
 
-- protected events: IEvents;
 - protected cardImage: HTMLImageElement;
-- protected cardTitle: HTMLElement;
 - protected cardCategory: HTMLElement;
+
+Методы:
+
+- сеттеры для полей класса
+
+#### Класс CardPreview extends СardСatalog
+
+Является дочерним классом от СardСatalog
+Отвечает карточку в модальном окне просмотра 1 карточки, задавая в карточке данные:описания. В классе устанавливаются слушатели на все интерактивные элементы, в результате взаимодействия с которыми покупателя генерируются соответствующие события.\
+Поля класса содержат элементы разметки элементов карточки. Конструктор, кроме темплейта принимает экземпляр `EventEmitter` для инициации событий.\
+
+Поля класса: 
+
 - protected cardDescription: HTMLElement;
 - protected buyButton: HTMLButtonElement;
-- protected cardPrice: HTMLElement;
-- protected cardId: string;
 
 Методы:
 
-- сеттеры и геттеры для полей класса
+- сеттеры для полей класса
 
 #### Класс Basket
 
@@ -254,29 +259,27 @@ interface IOrderData {
 
 Поля класса:
 
-- protected _basketItems: HTMLElement;
-- protected _basketTotal: HTMLElement;
+- protected \_basketItems: HTMLElement;
+- protected \_basketTotal: HTMLElement;
 - protected basketButton: HTMLButtonElement;
 
 Методы:
 
 - сеттеры и геттеры для полей класса
 
-#### Класс CardBasket
+#### Класс CardBasket extends Card
 
-Отвечает карточки в модальном окне просмотра Коризны, задавая в карточке данные: название, индекc, ценf=а. В классе устанавливаются слушатели на все интерактивные элементы, в результате взаимодействия с которыми покупателя генерируются соответствующие события.\
+Отвечает карточки в модальном окне просмотра Коризны, задавая в карточке данные: индекс. В классе устанавливаются слушатели на все интерактивные элементы, в результате взаимодействия с которыми покупателя генерируются соответствующие события.\
 Поля класса содержат элементы разметки элементов карточки. Конструктор, кроме темплейта принимает экземпляр `EventEmitter` для инициации событий.\
 
 Поля класса:
 
-- protected cardTitle: HTMLElement;
-- protected cardPrice: HTMLElement;
 - protected cardIndex: HTMLElement;
 - protected deleteButton: HTMLButtonElement;
 
 Методы:
 
-- сеттеры и геттеры для полей класса
+- сеттеры  для полей класса
 
 #### Класс Form
 
@@ -286,8 +289,8 @@ interface IOrderData {
 Конструктор, кроме темплейта принимает экземпляр `EventEmitter` для инициации событий.\
 Поля класса:
 
-- protected _submit: HTMLButtonElement;
-- protected _errors: HTMLElement;
+- protected \_submit: HTMLButtonElement;
+- protected \_errors: HTMLElement;
 
 Методы:
 
@@ -330,7 +333,7 @@ interface IOrderData {
 Поля класса:
 
 - protected successButton: HTMLButtonElement;
-- protected _total: HTMLElement;
+- protected \_total: HTMLElement;
 
 Методы:
 
