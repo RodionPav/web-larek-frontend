@@ -21,5 +21,22 @@ export class СardСatalog<T> extends Card<IProduct> {
 
 	set category(category: string) {
 		this.cardCategory.textContent = category;
+		switch (category) {
+			case 'софт-скил':
+				this.cardCategory.classList.add('card__category_soft');
+				break;
+			case 'другое':
+				this.cardCategory.classList.add('card__category_other');
+				break;
+			case 'дополнительное':
+				this.cardCategory.classList.add('card__category_additional');
+				break;
+			case 'кнопка':
+				this.cardCategory.classList.add('card__category_button');
+				break;
+			case 'хард-скил':
+				this.cardCategory.classList.add('card__category_hard');
+				break;
+		}
 	}
 }

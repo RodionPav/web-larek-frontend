@@ -17,10 +17,16 @@ export class CardPreview extends СardСatalog<IProduct> {
 		);
 	}
 
-	render(data: Partial<IProduct>, disable?: boolean) {
+	render(data: Partial<IProduct>, disable?: boolean, prise?: boolean) {
 		if (disable) {
 			super.disableBasketButton(this.buyButton);
 		} else super.unDisableBasketButton(this.buyButton);
+		if (!prise) {
+			(this.buyButton.textContent = 'Нельзя купить'),
+				super.disableBasketButton(this.buyButton);
+		} else {
+			this.buyButton.textContent = 'Купить';
+		}
 		return super.render(data);
 	}
 

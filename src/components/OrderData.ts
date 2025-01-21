@@ -2,10 +2,6 @@ import { IOrder, IProduct, FormErrors, IOrderData } from '../types';
 import { IEvents } from './base/events';
 
 export class OrderData implements IOrderData {
-	// protected payment: string;
-	// protected address: string;
-	// protected email: string;
-	// protected phone: string;
 	protected order: IOrder = {
 		email: '',
 		phone: '',
@@ -21,10 +17,6 @@ export class OrderData implements IOrderData {
 	}
 
 	addProduct(product: IProduct) {
-		// if (this.items.find((item) => item.id !== product.id)) {
-		// 	this.items = [product, ...this.items];
-		// 	this.events.emit('order:change');
-		// }
 		this.items = [product, ...this.items];
 		this.events.emit('order:change', { card: product });
 	}

@@ -19,8 +19,21 @@ export abstract class Card<T> extends Component<T> {
 		this.cardTitle.textContent = title;
 	}
 
+	// set price(price: string) {
+	// 	if (price) {
+	// 		this.cardPrice.textContent = `${price} синапсов`;
+	// 	} else {
+	//
+	// 			this.events.emit('buyButton:buyItem', { card: this });
+	// 	}
+	// }
+
 	set price(price: string) {
-		this.cardPrice.textContent = `${price} синапсов`;
+		if (price) {
+			this.cardPrice.textContent = `${price} синапсов`;
+		} else {
+			this.cardPrice.textContent = `Бесценно`;
+		}
 	}
 
 	set id(id) {

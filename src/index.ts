@@ -5,7 +5,6 @@ import { ProductsData } from './components/ProductsData';
 
 import { API_URL, CDN_URL } from './utils/constants';
 import { AuctionAPI } from './components/AppApi';
-import { Card } from './components/common/Card';
 import { cloneTemplate, ensureElement } from './utils/utils';
 
 import { Basket } from './components/Basket';
@@ -25,11 +24,17 @@ const events: IEvents = new EventEmitter();
 const page = new Page(document.body, events);
 const modal = new Modal(document.querySelector('.modal'), events);
 
-const cardСatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
-const cardPreviewTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
 const cardBasketTemplate = ensureElement<HTMLTemplateElement>('#card-basket');
-const successTemplate = ensureElement<HTMLTemplateElement>('#success');
 
+const cardСatalogTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
+const cardPrev = new CardPreview(
+	cloneTemplate(ensureElement<HTMLTemplateElement>('#card-preview')),
+	events
+);
+const success = new Success(
+	cloneTemplate(ensureElement<HTMLTemplateElement>('#success')),
+	events
+);
 const basket = new Basket(
 	cloneTemplate(ensureElement<HTMLTemplateElement>('#basket')),
 	events
@@ -52,7 +57,6 @@ api
 	.getProducts()
 	.then((result) => {
 		productsData.setProducts(result);
-		events.emit('initalData:loaded');
 	})
 	.catch((err) => {
 		console.error(err);
@@ -69,7 +73,6 @@ events.on('contacts:submit', () => {
 	api
 		.orderProducts(order)
 		.then((result) => {
-			const success = new Success(cloneTemplate(successTemplate), events);
 			modal.render({
 				content: success.render({
 					total: result.total,
@@ -102,16 +105,16 @@ events.on('basket:open', () => {
 });
 
 events.on('cardPreview:open', (data: { card: IProduct }) => {
-	const cardPrev = new CardPreview(cloneTemplate(cardPreviewTemplate), events);
 	const { card } = data;
 	const product = productsData.getProduct(card.id);
+	console.log(Boolean(product.price));
 	if (orderData.getItems().includes(product)) {
 		modal.render({
-			content: cardPrev.render(product, true),
+			content: cardPrev.render(product, true, Boolean(product.price)),
 		});
 	} else {
 		modal.render({
-			content: cardPrev.render(product, false),
+			content: cardPrev.render(product, false, Boolean(product.price)),
 		});
 	}
 });
@@ -131,10 +134,6 @@ events.on('cardBasket:deleteItem', (data: { card: IProduct }) => {
 
 events.on('order:change', () => {
 	const basketList = orderData.getItems().map((item, index) => {
-		// const cardBasket = new CardBasket(
-		// 	cloneTemplate(cardBasketTemplate),
-		// 	{onClick: ()=>{ events.emit(basket:deleteItem, item)}}
-		// );
 		const cardBasket = new CardBasket(
 			cloneTemplate(cardBasketTemplate),
 			events
@@ -159,10 +158,11 @@ events.on('payForm:open', () => {
 		content: payForm.render({
 			address: orderData.getOrderByKey('address'),
 			payment: orderData.getOrderByKey('payment'),
-			valid: false,
+			valid: orderData.validateOrder('address'),
 			errors: [],
 		}),
 	});
+	payForm.togglePayButton(orderData.getOrderByKey('payment'));
 });
 
 events.on('paymentButton:click', (data: { payment: string }) => {
@@ -211,7 +211,8 @@ events.on('order:submit', () => {
 		content: contactsForm.render({
 			phone: orderData.getOrderByKey('phone'),
 			email: orderData.getOrderByKey('email'),
-			valid: false,
+			valid:
+				orderData.validateOrder('phone') && orderData.validateOrder('email'),
 			errors: [],
 		}),
 	});

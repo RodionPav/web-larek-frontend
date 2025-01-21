@@ -39,15 +39,4 @@ export class PayForm extends Form<TOrderPayInfo> {
 			: (this.paymentCashButton.classList.add('button_alt-active'),
 			  this.paymentCardButton.classList.remove('button_alt-active'));
 	}
-
-	// disableBasketButton(element: HTMLButtonElement) {
-	// 	if (element) {
-	// 		element.disabled = true;
-	// 	}
-	// }
-	// unDisableBasketButton(element: HTMLButtonElement) {
-	// 	if (element) {
-	// 		element.disabled = false;
-	// 	}
-	// }
 }
